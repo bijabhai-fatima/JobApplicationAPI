@@ -14,6 +14,7 @@ const JobApplicationSchema = mongoose.Schema({
     company: String,
     appliedDate: Date,
     status: Number,
+    link: String
 })
 const JobApplicationModel = mongoose.model("Job Applications", JobApplicationSchema)
 
@@ -108,10 +109,10 @@ app.get('/applications', async (req, res) => {
   });
   
   app.post('/applications', async (req, res) => {
-    const { role, company, appliedDate, status } = req.body;
+    const { role, company, appliedDate, status, link } = req.body;
   
     // Optional: basic validation
-    if (!role || !company || !appliedDate || typeof status !== 'number') {
+    if (!role || !company || !appliedDate  || !link || typeof status !== 'number') {
       return res.status(400).json({ error: 'role, company, appliedDate, and numeric status are required' });
     }
   
@@ -121,6 +122,7 @@ app.get('/applications', async (req, res) => {
         company,
         appliedDate: new Date(appliedDate),
         status,
+        link
       });
   
       const savedApplication = await newApplication.save();
