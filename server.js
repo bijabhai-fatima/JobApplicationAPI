@@ -195,7 +195,7 @@ app.get('/applications/:id', async (req, res) => {
         return res.status(404).json({ error: 'Application not found' });
       }
       
-      const mapped = applications.map(app => ({
+      const mapped = application.map(app => ({
         ...app.toObject(),
         statusLabel: STATUS_MAP[app.status]
       }));
