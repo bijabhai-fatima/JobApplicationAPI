@@ -50,8 +50,9 @@ app.get('/applications', async (req, res) => {
 })
 
   app.get('/applications/status/:status', async (req, res) => {
-    const { statusLabel } = req.params;
-  const statusCode = STATUS_MAP[statusLabel.toLowerCase()];
+    const { status } = req.params;
+    const statusCode = STATUS_LABEL_TO_CODE[status];
+    console.log(status, statusCode)
 
   if (statusCode === undefined) {
     return res.status(400).json({ error: 'Invalid status. Use applied, interview, offer, or rejected.' });
@@ -62,7 +63,7 @@ app.get('/applications', async (req, res) => {
 
     const mapped = applications.map(app => ({
       ...app.toObject(),
-      statusLabel: statusLabel.toLowerCase(),
+      statusLabel: STATUS_MAP[app.status],
     }));
 
     res.status(200).json(mapped);
