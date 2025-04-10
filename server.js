@@ -195,12 +195,10 @@ app.get('/applications/:id', async (req, res) => {
         return res.status(404).json({ error: 'Application not found' });
       }
       
-      const mapped = application.map(app => ({
-        ...app.toObject(),
-        statusLabel: STATUS_MAP[app.status]
-      }));
+      const appObj = application.toObject();
+      appObj.statusLabel = STATUS_MAP[appObj.status];
 
-      res.status(200).json(mapped);
+      res.status(200).json(appObj);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Failed to fetch application' });
